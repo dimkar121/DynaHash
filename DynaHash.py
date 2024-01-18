@@ -10,7 +10,7 @@ class DynaHash:
         self.eps = eps
         self.t = t
         self.k = k
-        self.m = 116
+        self.m = math.ceil(math.log(1/delta)/(2*eps**2))
         p = 1 - t
         L = math.ceil(math.log(self.delta) / math.log(1 - p**k))
         self.L = int(L)
@@ -34,30 +34,15 @@ class DynaHash:
     def str_to_MinHash(self, str1, q, seed=0):
         return min([mmh3.hash(str1[i:i + q], seed) for i in range(len(str1) - q + 1)])
 
-    #def str_to_MinHash(str1, q, seed=0):
-     #   return min([mmh3.hash(str1[i:i + q], seed) for i in range(len(str1) - q + 1)])
-
-    def intersection(self, lst1, lst2):
-      lst3 = [value for value in lst1 if value in lst2]
-      return lst3
-
     def string_to_ngram_set(self, str, q):
        return set([str[i:i+q] for i in range(len(str)-q+1)])
 
-    def jaccard_set(self, set1, set2):
-      # return Jaccard similarity coefficient between two sets
-      isz = len(set1.intersection(set2))
-      return  float(isz) / (len(set1) + len(set2) - isz)
-
-    def jaccard(self, str1, str2, q):
-       # turn two strings into sets, then return Jaccard similarity coefficient of those sets
-       return  self.jaccard_set(self.string_to_ngram_set(str1, q), self.string_to_ngram_set(str2, q))
 
 
     def get(self, key):
-        #key = "_" + key + "_"
         matchingKeys = {}
         results = []
+        no_items = 0
         r = []
         for j in range(self.m):
              k = self.str_to_MinHash(key, 2, j)
@@ -72,18 +57,17 @@ class DynaHash:
               for key in key_list:
                   if key in matchingKeys.keys():
                      continue
+                  no_items += 1
                   arr = self.vs[key]["k"]
-                  #print(hamming(r, arr)*len(arr), math.ceil((1 - self.t)*len(arr)))
                   dist = hamming(r, arr)*len(arr)
                   if dist <= math.ceil((1 - self.t)*len(arr)):
                       matchingKeys[key] = 1
                       results.append({key: self.vs[key]["v"]})
-        return results
+        return results, no_items
 
 
     def put(self, key, v):
         r = []
-        #key = "_"+key+"_"
         for j in range(self.m):
              k = self.str_to_MinHash(key, 2, j)
              r.append(k)
@@ -99,6 +83,11 @@ class DynaHash:
            else:
                 self.vs[key] = {"v": v, "k": r}
                 self.dictB[l][keys] = [key]
+
+
+    def get_items_no(self):
+        return len(self.vs.keys())
+
 
 
     def verify(self, key):
