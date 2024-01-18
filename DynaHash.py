@@ -90,7 +90,7 @@ class DynaHash:
 
 
 
-    def verify(self, key):
+    def get_ground_truth(self, key):
         results, no_items = self.get(key)
         ground_truth = []
         r = []
@@ -103,18 +103,6 @@ class DynaHash:
             if dist <= math.ceil((1 - self.t) * len(arr)):
                  ground_truth.append(k)
 
-        tp = 0
-        fp = 0
-        if len(ground_truth) > 0:
-             for result in results:
-                key = list(result.keys())[0]
-                if key in ground_truth:
-                     tp += 1
-                else:
-                      fp += 1
-             recall = tp / len(ground_truth)
-             precision = tp / (tp + fp)
-             print(key, "recall=", recall, "precision=", precision)
         return ground_truth
 
 

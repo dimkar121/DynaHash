@@ -1,7 +1,6 @@
 import DynaHash as DH
 import time
 import csv
-import math
 
 if __name__ == '__main__':
     dh = DH.DynaHash()
@@ -20,7 +19,7 @@ if __name__ == '__main__':
             except:
                 continue
     end = time.time()
-    print("time=", end - start)
+    print("clock time=", end - start)
 
     rs = 0
     sum_items = 0
@@ -29,8 +28,7 @@ if __name__ == '__main__':
     for k in dh.vs.keys():
         results, no_items = dh.get(k)
         sum_items += no_items
-        print(no_items, math.sqrt(dh.get_items_no()))
-        ground_truth = dh.verify(k)
+        ground_truth = dh.get_ground_truth(k)
         tp = 0
         fp = 0
         if len(ground_truth) > 0:
@@ -44,7 +42,7 @@ if __name__ == '__main__':
             rs += tp / len(ground_truth)
             ps += tp / (tp + fp)
 
-    print("AVG RECALL", rs / i)
-    print("AVG PRECISION", ps / i)
-    print("AVG TIME", sum_items / i)
+    print("Avg recall", rs / i)
+    print("Avg precision", ps / i)
+    print("Avg query time (Avg number of items processed)", sum_items / i)
 
