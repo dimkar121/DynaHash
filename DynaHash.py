@@ -63,7 +63,7 @@ class DynaHash:
                   if dist <= math.ceil((1 - self.t)*len(arr)):
                       matchingKeys[key] = 1
                       results.append({key: self.vs[key]["v"]})
-        return results, no_items
+        return (results, no_items)
 
 
     def put(self, key, v):
@@ -91,7 +91,7 @@ class DynaHash:
 
 
     def verify(self, key):
-        results = self.get(key)
+        results, no_items = self.get(key)
         ground_truth = []
         r = []
         for j in range(self.m):
