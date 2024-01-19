@@ -13,10 +13,11 @@ DynaHash supports two main methods put() and get(); method `put()` inserts a key
 
 ```python
 dh = new DynaHash(t=0.5)
-dh.put("Katerina", v1)
-dh.put("Cathrine", v2)
-fh.get("Catherina") ---> [{"Katerina":v1}, {"Cathrine":v2}]
+dh.put("Katerina", object())
+dh.put("Cathrine", object())
+fh.get("Catherina") ---> [{'Katerina': <object object at 0x000002D51B2FAE90>}, {'Cathrine': <object object at 0x000002D51B2FB7D0>}], 2
 ```
+It also returns the total number of items that have been retrieved.
 
 The storage requirements are $O(Ln)$ in the number $n$ of items, where $L$ denotes the number of the internal hash tables that are used.
 The query time, although is data dependent, by tuning appropriately the parameters can be $O(\sqrt{n})$.
