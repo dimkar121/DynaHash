@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
     start = time.time()
     i = 0
-    with open('g:/data/dblp/2014.csv', newline='', encoding="utf8") as csvfile:
+    with open('names_large.csv', newline='', encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter=';')
         headers = next(reader)
         for row in reader:
