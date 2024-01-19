@@ -20,6 +20,12 @@ class DynaHash:
         self.dictB = [dict() for l in range(self.L)]
         self.vs = {}
 
+
+    def Hamming(self, v1, v2):
+       return sum([1 for i, j in zip(v1, v2) if i != j])
+
+
+
     def createSamples(self):
         self.samples = []
         lm = list(range(self.m))
