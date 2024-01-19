@@ -15,7 +15,8 @@ DynaHash supports two main methods put() and get(); method `put()` inserts a key
 dh = new DynaHash(t=0.5)
 dh.put("Katerina", object())
 dh.put("Cathrine", object())
-fh.get("Catherina") ---> [{'Katerina': <object object at 0x000002D51B2FAE90>}, {'Cathrine': <object object at 0x000002D51B2FB7D0>}], 2
+fh.get("Catherina")
+Output: [{'Katerina': <object object at 0x000002D51B2FAE90>}, {'Cathrine': <object object at 0x000002D51B2FB7D0>}], 2
 ```
 It also returns the total number of items that have been retrieved.
 
