@@ -34,9 +34,6 @@ class DynaHash:
     def str_to_MinHash(self, str1, q, seed=0):
         return min([mmh3.hash(str1[i:i + q], seed) for i in range(len(str1) - q + 1)])
 
-    def string_to_ngram_set(self, str, q):
-       return set([str[i:i+q] for i in range(len(str)-q+1)])
-
 
 
     def get(self, key):
@@ -63,7 +60,7 @@ class DynaHash:
                   if dist <= math.ceil((1 - self.t)*len(arr)):
                       matchingKeys[key] = 1
                       results.append({key: self.vs[key]["v"]})
-        return (results, no_items)
+        return results, no_items
 
 
     def put(self, key, v):

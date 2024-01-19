@@ -15,9 +15,6 @@ if __name__ == '__main__':
                 author = row[0]
                 year = row[1]
                 dh.put(author, year)
-                #i += 1
-                #if i >= 1000000:
-                #    break
             except:
                 continue
     end = time.time()
