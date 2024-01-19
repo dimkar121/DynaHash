@@ -27,4 +27,6 @@ The query time, although is data dependent, by tuning appropriately the paramete
 The source has been tested with Python version 3.12
 - Clone the repo
 - The `requirements.txt` file lists all Python modules that the source depends on. These modules can be installed using:
-  `pip3 install -r requirements.txt`.
+ ```
+pip3 install -r requirements.txt
+```
