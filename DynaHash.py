@@ -1,19 +1,18 @@
 import math
 import mmh3
-from scipy.spatial.distance import hamming
 import random
 
 class DynaHash:
 
-    def __init__(self, k=6, t=0.5, eps=0.1, delta=0.1, q=2):
+    def __init__(self, k=6, th=0.5, eps=0.1, delta=0.1, q=2):
         self.delta = delta
         self.eps = eps
-        self.t = t
+        self.th = th
         self.k = k
         self.m = math.ceil(math.log(1/delta)/(2*eps**2))
-        p = 1 - t
-        L = math.ceil(math.log(self.delta) / math.log(1 - p**k))
-        self.L = int(L)
+        self.t = math.ceil((1 - self.th)*self.m)
+        p = 1 - self.th
+        self.L = math.ceil(math.log(self.delta) / math.log(1 - p**self.k))
         print("L=", self.L, "m=", self.m)
         self.q = q
         self.createSamples()
@@ -57,19 +56,19 @@ class DynaHash:
                keys += str(r[s])
            if keys in self.dictB[l]:
               key_list = self.dictB[l][keys]
-              for key in key_list:
-                  if key in matchingKeys.keys():
+              for k in key_list:
+                  if k in matchingKeys.keys():
                      continue
                   no_items += 1
-                  arr = self.vs[key]["k"]
-                  dist = hamming(r, arr)*len(arr)
-                  if dist <= math.ceil((1 - self.t)*len(arr)):
-                      matchingKeys[key] = 1
-                      results.append({key: self.vs[key]["v"]})
+                  arr = self.vs[k]["k"]
+                  dist = self.Hamming(r, arr)
+                  if dist <= self.t:
+                      matchingKeys[k] = 1
+                      results.append({k: self.vs[k]["v"]})
         return results, no_items
 
 
-    def put(self, key, v):
+    def add(self, key, v):
         r = []
         for j in range(self.m):
              k = self.str_to_MinHash(key, 2, j)
@@ -102,8 +101,8 @@ class DynaHash:
             r.append(k)
         for k in self.vs.keys():
             arr = self.vs[k]["k"]
-            dist = hamming(r, arr) * len(arr)
-            if dist <= math.ceil((1 - self.t) * len(arr)):
+            dist = self.Hamming(r, arr)
+            if dist <= self.t:
                  ground_truth.append(k)
 
         return ground_truth
