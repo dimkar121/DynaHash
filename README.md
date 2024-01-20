@@ -18,7 +18,10 @@ dh.put("Cathrine", object())
 fh.get("Catherina")
 Result: [{'Katerina': <object object at 0x000002D51B2FAE90>}, {'Cathrine': <object object at 0x000002D51B2FB7D0>}], 2
 ```
-It also returns the total number of items that have been retrieved.
+It also returns the total number of items that have been retrieved to process a query record.
+
+There are two CSV files for testing `names_small.csv` and `names_large.csv`. The former contains $2,209$ names, while the latter includes all unqique author names ($\approx 1,800,000$) from DBLP from year 2014.
+Using a PC with an Intel Core i5-8500 @3.00GHz, it takes almost $7,800$ seconds to build the indexing structure that contains all names of `names_large.csv`. The average query time is $1,1139$ names, which is $< \sqrt{1,800,000}$.
 
 The storage requirements are $O(Ln)$ in the number $n$ of items, where $L$ denotes the number of the internal hash tables that are used.
 The query time, although is data dependent, by tuning appropriately the parameters can be $O(\sqrt{n})$.
