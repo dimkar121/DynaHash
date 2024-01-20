@@ -13,7 +13,7 @@ DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inser
 
 ```python
 >>> import DynaHash as DH
->>> dh=DH.DynaHash()
+>>> dh = DH.DynaHash()
 >>> dh.add("Katerina", object())
 >>> dh.add("Cathrine", object())
 >>> dh.get("Catherina")
