@@ -9,10 +9,10 @@ For instance, the Jaccard $(\mathcal{J})$ similarities of the following pairs of
 
 Each key is converted into a MinHash sequence, which is then hashed using Hamming LSH.
 
-DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inserts a key $k$ and its object $o$ into DynaHash, while `get(k)` returns a vector that contains all items, in terms of dictionaries, whose keys are within the specified Hamming distance threshold from $k$. 
+DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inserts a key $k$ and its object $o$ into DynaHash, while `get(k)` returns a vector that contains all items, in terms of dictionaries, whose keys are within the Hamming distance threshold, which has been calculated using the specified sensitivity, from $k$. The default sensitivity has been set to $0.5$.  
 
 ```python
-dh = new DynaHash(t=0.5)
+dh = new DynaHash()
 dh.add("Katerina", object())
 dh.add("Cathrine", object())
 fh.get("Catherina")
