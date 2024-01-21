@@ -14,10 +14,10 @@ DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inser
 ```python
 >>> import DynaHash as DH
 >>> dh = DH.DynaHash()
->>> dh.add("Katerina", object())
->>> dh.add("Cathrine", object())
->>> dh.get("Catherina")
-([{'Katerina': <object object at 0x00000184757D1220>}, {'Cathrine': <object object at 0x00000184757D1820>}], 2)
+>>> dh.add("Staci", object())
+>>> dh.add("Stacie", object())
+>>> dh.get("Stacy")
+([{'Staci': <object object at 0x00000184757D1220>}, {'Stacie': <object object at 0x00000184757D1820>}], 2)
 ```
 It also returns the total number of items that have been retrieved to process a query record. The number $L$ of the hash tables that are required depends on parameters $t$, $k$, and $\delta$, which are the Jaccard similarity, the number of components that will be randomly and uniformly selected from each MinHash sequence, and the failure probability, respectively. 
 
