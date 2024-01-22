@@ -130,15 +130,15 @@ class DynaHash:
         k = bytes(key, "utf-8")
         results, no_items = self.db_get(k)
         ground_truth = []
-        r = []
+        m_key = []
         for j in range(self.m):
             k = self.str_to_MinHash(key, 2, j)
-            r.append(k)
+            m_key.append(k)
 
-        for k1 in self.db2.scan_iter("*"):
-            arr_bytes = self.db2.get(k1)
-            arr = pickle.loads(arr_bytes)
-            dist = self.Hamming(r, arr)
+        for k1,_ in self.db2:
+            dict_obj = self.db2.get(k1)
+            dict_obj = json.loads(dict_obj)
+            dist = self.Hamming(m_key, dict_obj["k"])
             if dist <= self.t:
                  k1 = bytes.decode(k1, 'utf-8')
                  ground_truth.append(k1)
