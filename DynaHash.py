@@ -1,10 +1,16 @@
 import math
 import mmh3
 import random
-
+import time
+try:
+    import plyvel
+except ModuleNotFoundError:
+    pass
+import pickle
+import os
 class DynaHash:
 
-    def __init__(self, k=6, th=0.5, eps=0.1, delta=0.1, q=2):
+    def __init__(self, k=6, th=0.5, eps=0.1, delta=0.1, q=2, db=False, db_dir=""):
         self.delta = delta
         self.eps = eps
         self.th = th
@@ -18,6 +24,10 @@ class DynaHash:
         self.createSamples()
         self.dictB = [dict() for l in range(self.L)]
         self.vs = {}
+        if db == True:
+            self.db = True
+            self.db1 = plyvel.DB(db_dir, create_if_missing=True)
+            self.db2 = plyvel.DB(db_dir+"/objects/", create_if_missing=True)
 
 
     def Hamming(self, v1, v2):
@@ -27,14 +37,19 @@ class DynaHash:
 
     def createSamples(self):
         self.samples = []
+        if self.db == True:
+            if os.path.exists(self.db_dir + '/objects/samples.pickle'):
+                with open(self.db_dir + '/objects/samples.pickle', 'rb') as handle:
+                    self.samples = pickle.load(handle)
+                    return
         lm = list(range(self.m))
         for l in range(self.L):
              s = random.sample(lm, self.k)
              self.samples.append(s)
-        #with open('/home/dimkar/leveldb/dblp/samples.pickle', 'wb') as handle:  # samples5.pickle k=5
-           #pickle.dump(samples, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        #with open('/home/dimkar/leveldb/dblp/samples.pickle', 'rb') as handle:
-          #samples = pickle.load(handle)
+        if self.db == True:
+            with open(self.db_dir+'/objects/samples.pickle', 'wb') as handle:
+               pickle.dump(self.samples, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 
     def str_to_MinHash(self, str1, q, seed=0):
         return min([mmh3.hash(str1[i:i + q], seed) for i in range(len(str1) - q + 1)])
@@ -107,7 +122,58 @@ class DynaHash:
 
         return ground_truth
 
+    def db_add(self, key, v):
+        r = []
+        for j in range(self.m):
+            k = self.str_to_MinHash(key, 2, j)
+            r.append(k)
 
+        for l in range(self.L):
+            sample = self.samples[l]
+            keys = ""
+            for s in sample:
+                keys += str(r[s])
+            ts = time.time()
+            k = "".join([str(l), ":", keys, "!", str(ts)])
+            k = bytes(k, 'utf-8')
+            self.db1.put(k, key)
+            bKey = bytes(key, 'utf-8')
+            self.db2.put(bKey, {"v": v, "k": r})
+
+
+    def db_get(self, key):
+        results = []
+        r = []
+        no_items = 0
+        for j in range(self.m):
+            k = self.str_to_MinHash(key, 2, j)
+            r.append(k)
+        matchingKeys = {}
+        for l in range(self.L):
+            sample = self.samples[l]
+            keyArr = []
+            keys= ""
+            for s in sample:
+                keys += str(r[s])
+                keyArr.append(str(r[s]))
+            k = "".join([str(l), ":", keys])
+            k = bytes(k, "utf-8")
+            for _, k in self.db1.iterator(prefix=key):
+                k = bytes.decode(k, 'utf-8')
+                if k in matchingKeys.keys():
+                    continue
+                no_items += 1
+                arr = []
+                for j in range(self.m):
+                    k1 = self.str_to_MinHash(k, 2, j)
+                    arr.append(k1)
+                r = self.db2.get(key)
+                dist = self.Hamming(r["k"], arr)
+                if dist <= self.t:
+                    matchingKeys[key] = 1
+                    results.append({key: self.db2.get(key)["v"]})
+
+        return  results, no_items
 
 
 
