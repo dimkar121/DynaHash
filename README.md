@@ -22,10 +22,13 @@ DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inser
 It also returns the total number of items that have been retrieved to process a query record. The number $L$ of the hash tables that are required depends on parameters $t$, $k$, and $\delta$, which are the Jaccard similarity, the number of components that will be randomly and uniformly selected from each MinHash sequence, and the failure probability, respectively. 
 
 There are two CSV files for testing `names_small.csv` and `names_large.csv`. The former contains $2,209$ names, while the latter includes all unique author names ($\approx 1,800,000$) from DBLP in the year 2014.
-Using a PC with an Intel Core i5-8500 @3.00GHz, it takes almost $2,000$ seconds to build the indexing structure that contains all names of `names_large.csv`. For resolving a query, the average clock time is $0.02$ seconds, while the average number of the retrieved items  is $1,1139$, which is $\approx \sqrt{1,800,000}$. 
+Using an ESXi U2 VM with 8 cores and 48GB of main memeory, it takes almost $2,000$ seconds to build the indexing structure that contains all names of `names_large.csv`. For resolving a query, the average clock time is $0.02$ seconds, while the average number of the retrieved items  is $1,1139$, which is $\approx \sqrt{1,800,000}$. 
+
+There is also a DB version of DynaHash, which is backed by [levelDB](https://github.com/google/leveldb) for the persistent operations. [Plyvel](https://github.com/wbolster/plyvel) is The Python wrapper on top of levelDB. The main funcions are `db_add()` and `db_get()`.    
+
 
 The storage requirements are $O(Ln)$ in the number $n$ of items, where $L$ denotes the number of the internal hash tables that are being used.
-The query time, by tuning properly the parameters $t$, $s$, is $\Theta(\sqrt{n})$.
+The query time, by tuning properly the parameters $t$ and $s$, is $\Theta(\sqrt{n})$.
 
 
 
