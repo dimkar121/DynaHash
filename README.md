@@ -35,6 +35,7 @@ The query time, by tuning properly the parameters $t$ and $s$, is $\Theta(\sqrt{
 ## Running the artifact
 The source has been tested with Python version 3.12
 - Clone the repo
+- `main.py` and `main_db.py` showcase the operations of the pure in-memory version and the DB version,respectively.  
 - The `requirements.txt` file lists all Python modules that the source depends on. These modules can be installed using:
  ```
 pip3 install -r requirements.txt
