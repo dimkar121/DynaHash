@@ -100,13 +100,10 @@ if __name__ == '__main__':
     sum_items = 0
     with open('2023.csv', newline='', encoding="utf8") as csvfile:
          reader = csv.reader(csvfile, delimiter=';')
-         #headers = next(reader)
          for row in reader:
              try:
                author = row[0]
                i += 1
-               if i == 100000:
-                      break
                r = []
                for j in range(m):
                   k = dh.str_to_MinHash(author, 2, j)
@@ -135,7 +132,7 @@ if __name__ == '__main__':
                print(message)
 
          i = 0
-         with open('/home/dimkar/data/dblp/2023.csv', newline='') as csvfile:
+         with open('2023.csv', newline='') as csvfile:
              reader = csv.reader(csvfile, delimiter=';')
              for row in reader:
                 author = row[0]
