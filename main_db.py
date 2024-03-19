@@ -2,6 +2,9 @@ import DynaHash as DH
 import time
 import csv
 
+
+
+
 def populate(dh):
     with open('names_small.csv', newline='', encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter=';')
