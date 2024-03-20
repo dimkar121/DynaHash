@@ -77,7 +77,7 @@ def query(dh, q):
 
 if __name__ == '__main__':
     dh = DH.DynaHash(db=True, db_dir="./data_T")
-    populate(dh)
+    #populate(dh)
     print("T k_\phi=", kf, "L_\phi=", Lf)
     i = 0
     sum_items = 0
@@ -86,10 +86,11 @@ if __name__ == '__main__':
         for row in reader:
             try:
                 author = row[0]
+                year = row[1]
                 i += 1
                 if i % 10000 == 0:
                     print(i)
-
+                dh.db_add(author, year)
                 r = []
                 for j in range(m):
                     k = dh.str_to_MinHash(author, 2, j)
