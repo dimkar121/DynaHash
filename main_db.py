@@ -33,7 +33,7 @@ if __name__ == '__main__':
          for row in reader:
                  author = row[0]
                  year = row[1]
-                 results, no_items = dh.db_get(author)
+                 results, no_items, queryTime = dh.db_get(author)
                  print("KEY:", author)
                  print(results, no_items)
                  print("===========================================================")

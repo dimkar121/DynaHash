@@ -128,7 +128,6 @@ class DynaHash:
 
     def get_db_ground_truth(self, key):
         k = bytes(key, "utf-8")
-        results, no_items = self.db_get(k)
         ground_truth = []
         m_key = []
         for j in range(self.m):
@@ -155,6 +154,7 @@ class DynaHash:
             k = self.str_to_MinHash(key, 2, j)
             m_key.append(k)
         matchingKeys = {}
+        st = time.time()
         for l in range(self.L):
             sample = self.samples[l]
             keyArr = []
@@ -176,8 +176,9 @@ class DynaHash:
                 if dist <= self.t:
                     matchingKeys[k1] = 1
                     results.append({k1: dict_obj["v"]})
-
-        return results, no_items
+        end = time.time()
+        queryTime = round(end - st, 2)
+        return results, no_items, queryTime
 
     def db_add(self, key, v):
         r = []
