@@ -18,7 +18,7 @@ if __name__ == '__main__':
             except:
                 continue
     end = time.time()
-    print("clock time=", end - start)
+    print("blocking time=", end - start)
 
     rs = 0
     sum_items = 0
@@ -26,6 +26,9 @@ if __name__ == '__main__':
     i = 0
     for k in dh.vs.keys():
         results, no_items = dh.get(k)
+        print("KEY:", k)
+        print(results, no_items)
+        print("===========================================================")
         sum_items += no_items
         ground_truth = dh.get_ground_truth(k)
         tp = 0

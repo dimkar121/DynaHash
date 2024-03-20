@@ -19,7 +19,7 @@ def populate(dh):
 
 
 if __name__ == '__main__':
-    dh = DH.DynaHash(db=True, db_dir="./leveldb")
+    dh = DH.DynaHash(db=True, db_dir="./data")
 
     populate(dh)
 
@@ -37,20 +37,20 @@ if __name__ == '__main__':
                  print("KEY:", author)
                  print(results, no_items)
                  print("===========================================================")
+                 sum_items += no_items
                  ground_truth = dh.get_db_ground_truth(author)
                  tp = 0
                  fp = 0
                  if len(ground_truth) > 0:
                      i += 1
-                     sum_items += no_items
                      for r in results:
                          key = list(r.keys())[0]
                          if key in ground_truth:
                              tp += 1
                          else:
                             fp += 1
-                         recalls += tp / len(ground_truth)
-                         precisions += tp / (tp + fp)
+                     recalls += tp / len(ground_truth)
+                     precisions += tp / (tp + fp)
 
          print("Avg recall", recalls / i)
          print("Avg precision", precisions / i)

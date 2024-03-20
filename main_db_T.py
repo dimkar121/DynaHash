@@ -76,8 +76,8 @@ def query(dh, q):
 
 
 if __name__ == '__main__':
-    dh = DH.DynaHash(db=True, db_dir="./leveldb")
-    # populate(dh)
+    dh = DH.DynaHash(db=True, db_dir="./data_T")
+    populate(dh)
     print("T k_\phi=", kf, "L_\phi=", Lf)
     i = 0
     sum_items = 0
