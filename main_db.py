@@ -52,9 +52,9 @@ if __name__ == '__main__':
                      recalls += tp / len(ground_truth)
                      precisions += tp / (tp + fp)
 
-         print("Avg recall", recalls / i)
-         print("Avg precision", precisions / i)
-         print("Avg query time (Avg number of items processed)", sum_items / i)
+         print("Avg recall", round(recalls / i, 2))
+         print("Avg precision", round(precisions / i, 2))
+         print("Avg query time (Avg number of items processed)", round(sum_items / i, 2))
 
 
 

@@ -18,19 +18,6 @@ for l in range(Lf):
     T[l]["_evictions"] = 0
 
 
-def populate(dh):
-    with open('2023.csv', newline='', encoding="utf8") as csvfile:
-        reader = csv.reader(csvfile, delimiter=';')
-        i = 0
-        for row in reader:
-            author = row[0]
-            year = row[1]
-            i += 1
-            if i % 10000 == 0:
-                print(i)
-
-            dh.db_add(author, year)
-
 
 def query(dh, q):
     global kf, Lf, w, T, t, m
@@ -77,7 +64,6 @@ def query(dh, q):
 
 if __name__ == '__main__':
     dh = DH.DynaHash(db=True, db_dir="./data_T")
-    #populate(dh)
     print("T k_\phi=", kf, "L_\phi=", Lf)
     i = 0
     sum_items = 0

@@ -44,7 +44,7 @@ if __name__ == '__main__':
             rs += tp / len(ground_truth)
             ps += tp / (tp + fp)
 
-    print("Avg recall", rs / i)
-    print("Avg precision", ps / i)
-    print("Avg query time (Avg number of items processed)", sum_items / i)
+    print("Avg recall", round(rs / i, 2))
+    print("Avg precision", round(ps / i, 2))
+    print("Avg query time (Avg number of items processed)", round(sum_items / i, 2))
 
