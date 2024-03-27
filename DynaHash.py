@@ -143,7 +143,7 @@ class DynaHash:
             k = self.str_to_MinHash(key, 2, j)
             m_key.append(k)
 
-        for k, v in self.db2:
+        for k, v in self.db2.iterator():
             dict_obj = bytes.decode(v, 'utf-8')
             dict_obj = json.loads(dict_obj)
             dist = self.Hamming(m_key, dict_obj["h"])
