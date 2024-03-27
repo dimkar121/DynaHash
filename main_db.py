@@ -44,7 +44,7 @@ if __name__ == '__main__':
                  if len(ground_truth) > 0:
                      i += 1
                      for r in results:
-                         key = list(r.keys())[0]
+                         key = r["k"]
                          if key in ground_truth:
                              tp += 1
                          else:

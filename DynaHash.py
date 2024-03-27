@@ -136,7 +136,6 @@ class DynaHash:
         return ground_truth
 
     def get_db_ground_truth(self, key):
-        k = bytes(key, "utf-8")
         ground_truth = []
         m_key = []
         for j in range(self.m):
