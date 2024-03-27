@@ -172,7 +172,7 @@ class DynaHash:
             bkey = bytes(ks, "utf-8")
             for k, v in self.db1.iterator(mode="from", key=bkey):
                 k1 = bytes.decode(k, 'utf-8')
-                if not k1.startswith(key):
+                if not k1.startswith(ks):
                     break
                 v1 = bytes.decode(v, 'utf-8')
                 if v1 in matchingKeys.keys():
