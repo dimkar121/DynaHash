@@ -122,7 +122,6 @@ class DynaHash:
 
 
     def get_ground_truth(self, key):
-        results, no_items = self.get(key)
         ground_truth = []
         r = []
         for j in range(self.m):
