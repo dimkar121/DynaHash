@@ -4,7 +4,8 @@ import random
 import time
 import json
 try:
-    import plyvel
+    import rocksdbpy
+    from rocksdbpy import Option
 except ModuleNotFoundError:
     pass
 import pickle
@@ -16,7 +17,8 @@ class DynaHash:
         self.eps = eps
         self.th = th
         self.k = k
-        self.m = math.ceil(math.log(1/delta)/(2*eps**2))
+
+        self.m = math.ceil(math.log(1/0.1)/(2*0.1**2))
         self.t = math.ceil((1 - self.th)*self.m)
         p = 1 - self.th
         self.L = math.ceil(math.log(self.delta) / math.log(1 - p**self.k))
@@ -26,8 +28,11 @@ class DynaHash:
         if db == True:
             self.db = True
             self.db_dir = db_dir
-            self.db1 = plyvel.DB(db_dir, create_if_missing=True)
-            self.db2 = plyvel.DB(db_dir + "/objects/", create_if_missing=True)
+            opts = Option()
+            opts.create_if_missing(True)
+            opts.set_max_open_files(1000)
+            self.db1 = rocksdbpy.open(db_dir, opts)
+            self.db2 = rocksdbpy.open(db_dir+'/objects/', opts)
         self.createSamples()
         self.dictB = [dict() for l in range(self.L)]
         self.vs = {}
@@ -68,41 +73,46 @@ class DynaHash:
         for j in range(self.m):
              k = self.str_to_MinHash(key, 2, j)
              r.append(k)
+        st = time.time()
         for l in range(self.L):
            sample = self.samples[l]
            keys = ""
            for s in sample:
                keys += str(r[s])
+
            if keys in self.dictB[l]:
               key_list = self.dictB[l][keys]
               for k in key_list:
                   if k in matchingKeys.keys():
                      continue
                   no_items += 1
-                  arr = self.vs[k]["k"]
+                  arr = self.vs[k]["h"]
                   dist = self.Hamming(r, arr)
                   if dist <= self.t:
                       matchingKeys[k] = 1
-                      results.append({k: self.vs[k]["v"]})
-        return results, no_items
+                      results.append({"k": k, "v": self.vs[k]["v"]})
+        end = time.time()
+        queryTime = round(end - st, 2)
+        return results, no_items, queryTime
 
 
     def add(self, key, v):
         r = []
         for j in range(self.m):
-             k = self.str_to_MinHash(key, 2, j)
-             r.append(k)
+                k = self.str_to_MinHash(key, 2, j)
+                r.append(k)
         for l in range(self.L):
            sample = self.samples[l]
            keys = ""
            for s in sample:
-               keys += str(r[s])
+                keys += str(r[s])
+
            if keys in self.dictB[l]:
                 data = self.dictB[l][keys]
-                self.vs[key] = {"v": v, "k": r}
+                self.vs[key] = {"v": v, "h": r}
                 data.append(key)
            else:
-                self.vs[key] = {"v": v, "k": r}
+                self.vs[key] = {"v": v, "h": r}
                 self.dictB[l][keys] = [key]
 
 
@@ -119,7 +129,7 @@ class DynaHash:
             k = self.str_to_MinHash(key, 2, j)
             r.append(k)
         for k in self.vs.keys():
-            arr = self.vs[k]["k"]
+            arr = self.vs[k]["h"]
             dist = self.Hamming(r, arr)
             if dist <= self.t:
                  ground_truth.append(k)
@@ -134,12 +144,12 @@ class DynaHash:
             k = self.str_to_MinHash(key, 2, j)
             m_key.append(k)
 
-        for k1,_ in self.db2:
-            dict_obj = self.db2.get(k1)
+        for k, v in self.db2:
+            dict_obj = bytes.decode(v, 'utf-8')
             dict_obj = json.loads(dict_obj)
-            dist = self.Hamming(m_key, dict_obj["k"])
+            dist = self.Hamming(m_key, dict_obj["h"])
             if dist <= self.t:
-                 k1 = bytes.decode(k1, 'utf-8')
+                 k1 = bytes.decode(k, 'utf-8')
                  ground_truth.append(k1)
 
         return ground_truth
@@ -157,25 +167,27 @@ class DynaHash:
         st = time.time()
         for l in range(self.L):
             sample = self.samples[l]
-            keyArr = []
             keys = ""
             for s in sample:
                 keys += str(m_key[s])
-                # keyArr.append(str(m_key[s]))
-            k = "".join([str(l), ":", keys])
-            k = bytes(k, "utf-8")
-            for _, k1 in self.db1.iterator(prefix=k):
-                k1 = bytes.decode(k1, 'utf-8')
-                if k1 in matchingKeys.keys():
+            ks = "".join([str(l), ":", keys])
+            bkey = bytes(ks, "utf-8")
+            for k, v in self.db1.iterator(mode="from", key=bkey):
+                k1 = bytes.decode(k, 'utf-8')
+                if not k1.startswith(key):
+                    break
+                v1 = bytes.decode(v, 'utf-8')
+                if v1 in matchingKeys.keys():
                     continue
                 no_items += 1
                 arr = []
-                dict_obj = self.db2.get(bytes(k1, 'utf-8'))
+                dict_obj = self.db2.get(v)
+                dict_obj = bytes.decode(dict_obj, 'utf-8')
                 dict_obj = json.loads(dict_obj)
-                dist = self.Hamming(m_key, dict_obj["k"])
+                dist = self.Hamming(m_key, dict_obj["h"])
                 if dist <= self.t:
-                    matchingKeys[k1] = 1
-                    results.append({k1: dict_obj["v"]})
+                    matchingKeys[v1] = 1
+                    results.append({"k": v1, "v": dict_obj["v"]})
         end = time.time()
         queryTime = round(end - st, 2)
         return results, no_items, queryTime
@@ -185,6 +197,9 @@ class DynaHash:
         for j in range(self.m):
             k = self.str_to_MinHash(key, 2, j)
             r.append(k)
+        bKey = bytes(key, 'utf-8')
+        b_dict = json.dumps({"v": v, "h": r}, indent=2).encode('utf-8')
+        self.db2.set(bKey, b_dict)
 
         for l in range(self.L):
             sample = self.samples[l]
@@ -194,10 +209,8 @@ class DynaHash:
             ts = time.time()
             k = "".join([str(l), ":", keys, "!", str(ts)])
             k = bytes(k, 'utf-8')
-            bKey = bytes(key, 'utf-8')
-            self.db1.put(k, bKey)
-            b_dict = json.dumps({"v": v, "k": r}, indent=2).encode('utf-8')
-            self.db2.put(bKey, b_dict)
+            self.db1.set(k, bKey)
+
 
 
 

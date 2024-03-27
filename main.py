@@ -25,9 +25,9 @@ if __name__ == '__main__':
     ps = 0
     i = 0
     for k in dh.vs.keys():
-        results, no_items = dh.get(k)
+        results, no_items, queryTime = dh.get(k)
         print("KEY:", k)
-        print(results, no_items)
+        print(results, no_items, queryTime)
         print("===========================================================")
         sum_items += no_items
         ground_truth = dh.get_ground_truth(k)
@@ -36,7 +36,8 @@ if __name__ == '__main__':
         if len(ground_truth) > 0:
             i += 1
             for r in results:
-                key = list(r.keys())[0]
+                #key = list(r.keys())[0]
+                key = r["k"]
                 if key in ground_truth:
                     tp += 1
                 else:

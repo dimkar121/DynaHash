@@ -17,7 +17,7 @@ for l in range(Lf):
     T.append(dict())
     T[l]["_evictions"] = 0
 
-
+A = {}
 
 def query(dh, q):
     global kf, Lf, w, T, t, m
@@ -46,11 +46,8 @@ def query(dh, q):
                 if name in matchingNames.keys():
                     continue
                 noRecs += 1
-                arr = []
-                for j in range(m):
-                    k1 = dh.str_to_MinHash(name, 2, j)
-                    arr.append(k1)
 
+                arr = A[name]["h"]
                 dist = dh.Hamming(r, arr)
                 if dist <= dh.t:
                     matchingNames[name] = 1
@@ -81,6 +78,7 @@ if __name__ == '__main__':
                 for j in range(m):
                     k = dh.str_to_MinHash(author, 2, j)
                     r.append(k)
+                A[author] = {"v": year,  "h": r}
                 for l in range(Lf):
                     sample = dh.samples[l]
                     key = ""
@@ -97,6 +95,7 @@ if __name__ == '__main__':
                         else:
                             vs = T[l][key]
                             vs.append(author)
+
                     else:
                         T[l][key] = [author]
             except Exception as ex:
