@@ -19,7 +19,7 @@ def populate(dh):
 
 
 if __name__ == '__main__':
-    dh = DH.DynaHash(db=True, db_dir="./data")
+    dh = DH.DynaHash(db=True, db_dir="./data_db")
 
     populate(dh)
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     recalls = 0
     precisions = 0
     sum_items = 0
-    with open('names_small.csv', newline='', encoding="utf8") as csvfile:
+    with open('./data/names_small.csv', newline='', encoding="utf8") as csvfile:
          reader = csv.reader(csvfile, delimiter=';')
          headers = next(reader)
          for row in reader:

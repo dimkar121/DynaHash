@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
     start = time.time()
     i = 0
-    with open('names_small.csv', newline='', encoding="utf8") as csvfile:
+    with open('./data/names_small.csv', newline='', encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter=';')
         headers = next(reader)
         for row in reader:

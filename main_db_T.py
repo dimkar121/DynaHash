@@ -3,7 +3,6 @@ import time
 import csv
 import random
 import math
-from datetime import datetime
 
 m = 116
 kf = 4
@@ -64,7 +63,7 @@ if __name__ == '__main__':
     print("T k_\phi=", kf, "L_\phi=", Lf)
     i = 0
     sum_items = 0
-    with open('2023.csv', newline='', encoding="utf8") as csvfile:
+    with open('./data/2023.csv', newline='', encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter=';')
         for row in reader:
             try:
@@ -90,7 +89,7 @@ if __name__ == '__main__':
                         if len(T[l][key]) == w:
                             vs = T[l][key]
                             rnd = random.randint(0, w - 1)
-                            vs[rnd] = author
+                            vs[rnd] =  author
                             T[l]["_evictions"] += 1
                         else:
                             vs = T[l][key]
@@ -104,7 +103,7 @@ if __name__ == '__main__':
                 print(message)
 
         i = 0
-        with open('2023.csv', newline='') as csvfile:
+        with open('./data/2023.csv', newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=';')
             for row in reader:
                 author = row[0]
