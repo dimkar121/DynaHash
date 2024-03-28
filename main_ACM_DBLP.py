@@ -7,7 +7,7 @@ if __name__ == '__main__':
   dh = DH.DynaHash(th=0.5)
   df1 = pd.read_csv("./data/DBLP.csv", sep=",", encoding="unicode_escape", keep_default_na=False)
   df2 = pd.read_csv("./data/ACM.csv", sep=",", encoding="unicode_escape", keep_default_na=False)
-  truth = pd.read_csv("./data/truth.csv", sep=",", encoding="utf-8", keep_default_na=False)
+  truth = pd.read_csv("./data/truth_ACM_DBLP.csv", sep=",", encoding="utf-8", keep_default_na=False)
   truthD = dict()
   for i, r in truth.iterrows():
     idDBLP = str(r["idDBLP"])
@@ -38,6 +38,8 @@ if __name__ == '__main__':
                    tp+=1
               else:
                    fp+=1
+          else:
+              fp+=1
   print(tp, fp)
   print("recall=", round(tp/len(truthD.keys()), 2), "precision=", round(tp/(tp+fp), 2))
 
