@@ -36,3 +36,6 @@ The source has been tested with Python version 3.12
  ```
 pip3 install -r requirements.txt
 ```
+#References
+- [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. 1998. Minwise Independent Permutations. In ACM STOC. 327–336
+- [2] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. TKDE 27, 4 (2015), 909–921.
