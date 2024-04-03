@@ -6,7 +6,7 @@ For instance, the Jaccard $(\mathcal{J})$ similarities of the following pairs of
 - $\mathcal{J}(\textit{Dimitrios}, \textit{Dimitris}) = 0.666$,  
 - $\mathcal{J}(\textit{Katerina}, \textit{Catherina}) = 0.5$.  
 
-Each key is converted into a MinHash vector, which is then blocked using Hamming LSH.
+Each key is converted into a MinHash [1] vector, which is then blocked using Hamming LSH [2].
 
 DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inserts a key $k$ and its object $o$ into DynaHash, while `get(k)` returns a list that contains all the similar items that have been found with a probability at least $1-\delta$ for some user-defined $\delta$.
 ```python
@@ -36,6 +36,6 @@ The source has been tested with Python version 3.12
  ```
 pip3 install -r requirements.txt
 ```
-#References
+## References
 - [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. 1998. Minwise Independent Permutations. In ACM STOC. 327–336
 - [2] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. TKDE 27, 4 (2015), 909–921.
