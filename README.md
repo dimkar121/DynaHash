@@ -21,7 +21,7 @@ DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inser
 There are two CSV files for testing `names_small.csv` and `names_large.csv`. The former contains $2,209$ names, while the latter includes all unique author names ($\approx 1,800,000$) from DBLP in the year 2014.
 For resolving a query, the average clock time is $0.01$ seconds using a ESXi U2 VM with 8 cores and 48GB of main memory. The average number of the retrieved items is $1,1139$ which is $\approx \sqrt{1,800,000}$. 
 
-There is also a DB version of DynaHash, which is backed by Facebook's [RocksDB](https://github.com/facebook/rocksdb) for the persistent operations. [Rocksdbpy](https://github.com/trK54Ylmz/rocksdb-py) is The Python wrapper being used which operates on top of RocksDB. The main funcions are `db_add(k, o)` and `db_get(k)`. Any serializable JSON object can be passed as object $o$ for a key $k$.
+DynaHash is backed by Facebook's [RocksDB](https://github.com/facebook/rocksdb) for realizing its persistent operations. [Rocksdbpy](https://github.com/trK54Ylmz/rocksdb-py) is The Python wrapper which operates on top of RocksDB. The main funcions are `db_add(k, o)` and `db_get(k)`. Any serializable JSON object can be passed as object $o$ for a key $k$.
 
 The storage requirements are $O(Ln)$ in the number $n$ of items, where $L$, which is a function of the parameters specified, denotes the number of the internal hash tables that are being used.
 The query time, by tuning properly the parameters, is $\Theta(\sqrt{n})$.
