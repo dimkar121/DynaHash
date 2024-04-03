@@ -15,7 +15,7 @@ DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inser
 >>> dh.add("Staci", object())
 >>> dh.add("Stacie", object())
 >>> dh.get("Stacy")
-([{'Staci': <object object at 0x00000184757D1220>}, {'Stacie': <object object at 0x00000184757D1820>}], 2)
+([{'k':'Staci', 'v':<object object at 0x00000184757D1220>}, {'k':'Stacie', 'v':<object object at 0x00000184757D1820>}], 2)
 ```
 
 There are two CSV files for testing `names_small.csv` and `names_large.csv`. The former contains $2,209$ names, while the latter includes all unique author names ($\approx 1,800,000$) from DBLP in the year 2014.
