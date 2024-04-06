@@ -1,5 +1,6 @@
 import DynaHash as DH
 import pandas as pd
+from operator import itemgetter
 
 
 
@@ -13,6 +14,15 @@ if __name__ == '__main__':
     idDBLP = str(r["idDBLP"])
     idACM = str(r["idACM"])
     truthD[idDBLP] = idACM
+  tt={}
+  for k in truthD:
+      if isinstance(truthD[k], list):
+          tt[k] = len(truthD[k])
+      else:
+          tt[k] = 1
+  res = dict(sorted(tt.items(), key=itemgetter(1), reverse=True)[:500])
+  #print(res)
+
   for i, r in df1.iterrows():
        id=str(r["id"])
        authors = r["authors"]
