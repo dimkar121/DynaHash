@@ -36,6 +36,13 @@ The source has been tested with Python version 3.12
  ```
 pip3 install -r requirements.txt
 ```
+There are three executable Python files:
+- `main.py` which demonstrates the in-memory operations of DynaHash.
+- `main_db.py` which demonstrates the persistent operations of DynaHash.
+- `main_db_T.py` which demonstrates both the in-memory and persistent operations of DynaHash.
+- `main_ACM_DBLP.py` which uses the paired data sets ACM and DBLP to perform linkage.
+- `main_Scholar_DBLP.py` which uses the paired data sets Google Scholar and DBLP to perform linkage.
+  
 ## References
 - [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. Minwise Independent Permutations. ACM STOC. 1998. 327–336.
 - [2] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. IEEE TKDE 27, 4. 2015. 909–921.
