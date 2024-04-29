@@ -4,16 +4,18 @@ This is the accompanying artifact for the manuscript "DynaHash: An Efficient Blo
 ## Abstract
 Record linkage holds a crucial position in data management and analysis by identifying and merging records from disparate data sets that pertain to the same real-world entity. As data volumes grow, the intricacies of record linkage amplify, presenting challenges, such as potential redundancies and computational complexities. This paper introduces DynaHash, a novel randomized record linkage mechanism that utilizes (a) the MinHash technique to generate compact representations of blocking keys and (b) Hamming Locality-Sensitive Hashing to construct the blocking structure from these vectors. By employing these methods, DynaHash offers theoretical guarantees of accuracy and achieves sublinear runtime complexities, with appropriate parameter tuning. It comprises two key components: a persistent storage system for permanently storing the blocking structure to ensure complete results, and an in-memory component for generating very fast partial results by summarizing the persisted blocking structure. Our experimental evaluation against three state-of-the-art methods on six real-world data sets demonstrate DynaHash's exceptional recall rates and query times, which are at least 2x faster than its competitors and do not depend on the size of the underlying data sets.
 
-DynaHash is a general purpose dictionary, or hashmap, or hashtable, which operates in an approximate manner upon its matching function of keys. 
-Speicifically for a query key, DynaHash retrieves all items, whose similarity of their keys meet a user-specified Jaccard threshold. 
+## Description
+
+DynaHash is a general purpose dictionary, or hash map, or hash table, which operates in an approximate manner upon its matching function of keys. 
+<!-- Speicifically for a query key, DynaHash retrieves all items, whose similarity of their keys meets a user-specified Jaccard threshold with a certain probability bound. 
 For instance, the Jaccard $(\mathcal{J})$ similarities of the following pairs of strings, using their sets of 2-grams, are: 
 - $\mathcal{J}(\textit{William}, \textit{Will}) = 0.5$,  
 - $\mathcal{J}(\textit{Dimitrios}, \textit{Dimitris}) = 0.666$,  
-- $\mathcal{J}(\textit{Katerina}, \textit{Catherina}) = 0.5$.  
+- $\mathcal{J}(\textit{Katerina}, \textit{Catherina}) = 0.5$.  -->
 
-Each key is converted into a MinHash [1] vector, which is then blocked using Hamming LSH [2].
+Each key is converted into a MinHash [1] vector, using the method describe in , which is, then, blocked using Hamming LSH [2].
 
-DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inserts a key $k$ and its object $o$ into DynaHash, while `get(k)` returns a list that contains all the similar items that have been found with a probability at least $1-\delta$ for some user-defined $\delta$.
+DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inserts a key $k$ and its object $o$ into DynaHash, while `get(k)` returns a list that contains all the similar items that have been found in the Hamming space with a probability at least $1-\delta$ for some user-defined $\delta$.
 ```python
 >>> import DynaHash as DH
 >>> dh = DH.DynaHash()
