@@ -13,7 +13,7 @@ For instance, the Jaccard $(\mathcal{J})$ similarities of the following pairs of
 - $\mathcal{J}(\textit{Dimitrios}, \textit{Dimitris}) = 0.666$,  
 - $\mathcal{J}(\textit{Katerina}, \textit{Catherina}) = 0.5$.  -->
 
-Each key is converted into a MinHash [1] vector, using the method describe in , which is, then, blocked using Hamming LSH [2].
+Each key is converted into a MinHash [1] vector, using the method introduced in [2], which is, then, blocked using Hamming LSH [3].
 
 DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inserts a key $k$ and its object $o$ into DynaHash, while `get(k)` returns a list that contains all the similar items that have been found in the Hamming space with a probability at least $1-\delta$ for some user-defined $\delta$.
 ```python
@@ -52,4 +52,5 @@ There are three executable Python files:
   
 ## References
 - [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. Minwise Independent Permutations. ACM STOC. 1998. 327–336.
-- [2] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. IEEE TKDE 27, 4. 2015. 909–921.
+- [2] D. Karapiperis, C. Tjortjis, and V.S. Verykios. 2024. A Suite of Efficient Randomized Algorithms for Streaming Record Linkage. IEEE TKDE, preprints, 2024. 
+- [3] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. IEEE TKDE 27, 4. 2015. 909–921.
