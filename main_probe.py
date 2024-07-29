@@ -3,7 +3,7 @@ import time
 import csv
 
 if __name__ == '__main__':
-    dh = DH.DynaHash()
+    dh = DH.DynaHash(omega=1)
 
     start = time.time()
     i = 0
@@ -19,18 +19,20 @@ if __name__ == '__main__':
                 continue
     end = time.time()
     print("blocking time=", end - start)
-
+    dh.finalize()
     rs = 0
     sum_items = 0
+    sum_blocks = 0
     sum_query_time = 0
     ps = 0
     i = 0
     for k in dh.vs.keys():
-        results, no_items, query_time = dh.get(k)
+        results, no_items, query_time, avg_blocks = dh.probe_get(k)
         print("KEY:", k)
         print(results)
         print("===========================================================")
         sum_items += no_items
+        sum_blocks += avg_blocks
         sum_query_time += query_time
         ground_truth = dh.get_ground_truth(k)
         tp = 0
@@ -50,5 +52,4 @@ if __name__ == '__main__':
     print("Avg precision", round(ps / i, 2))
     print("Avg number of items processed", round(sum_items / i, 2))
     print("Avg query time", round(sum_query_time / i, 4))
-
-
+    print("Avg number of blocks scanned per hash table", round(sum_blocks / i, 2))

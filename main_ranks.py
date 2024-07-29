@@ -19,36 +19,15 @@ if __name__ == '__main__':
                 continue
     end = time.time()
     print("blocking time=", end - start)
-
     rs = 0
     sum_items = 0
     sum_query_time = 0
     ps = 0
     i = 0
     for k in dh.vs.keys():
-        results, no_items, query_time = dh.get(k)
+        ranks, no_items, query_time = dh.get_ranks(k, 0.85)
         print("KEY:", k)
-        print(results)
+        print(ranks)
         print("===========================================================")
         sum_items += no_items
         sum_query_time += query_time
-        ground_truth = dh.get_ground_truth(k)
-        tp = 0
-        fp = 0
-        if len(ground_truth) > 0:
-            i += 1
-            for r in results:
-                key = r["k"]
-                if key in ground_truth:
-                    tp += 1
-                else:
-                    fp += 1
-            rs += tp / len(ground_truth)
-            ps += tp / (tp + fp)
-
-    print("Avg recall", round(rs / i, 2))
-    print("Avg precision", round(ps / i, 2))
-    print("Avg number of items processed", round(sum_items / i, 2))
-    print("Avg query time", round(sum_query_time / i, 4))
-
-
