@@ -323,7 +323,7 @@ class DynaHash:
                     matchingKeys[v1] = 1
                     results.append({"k": v1, "v": dict_obj["v"]})
         end = time.time()
-        queryTime = round(end - st, 2)
+        queryTime = round(end - st, 4)
         return results, no_items, queryTime
 
     def db_add(self, key, v):
