@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
          print("Avg recall", round(recalls / i, 2))
          print("Avg precision", round(precisions / i, 2))
-         print("Avg query time (Avg number of items processed)", round(sum_items / i, 2))
+         print("Avg number of items processed (in each query)", round(sum_items / i, 2))
          print("Avg query time", round(sum_query_time / i, 4))
 
 
