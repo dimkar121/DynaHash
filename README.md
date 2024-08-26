@@ -44,7 +44,7 @@ The source has been tested with Python versions 3.10 and 3.12
 
 
 The project includes several scripts which demonstrate specific operations:
-- `main.py` and `main_db.py` handle pure in-memory and DB operations, respectively.
+- `main.py` and `main_db.py` handle the pure in-memory and DB operations, respectively.
 - `main_db_T.py` showcases the generalization of blocks using both in-memory and persistent operations.
 - `main_probe.py` demonstrates the multi-probe operation.
 - `main_ranks.py` ranks the results by adjusting the Jaccard threshold.
