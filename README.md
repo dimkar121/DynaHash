@@ -54,6 +54,6 @@ The following scripts evaluate the performance of DynaHash:
 - `main_Scholar_DBLP.py` uses the paired data sets Google Scholar and DBLP to perform linkage.
    
 ## References
-- [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. Minwise Independent Permutations. ACM STOC. 1998. 327–336.
-- [2] D. Karapiperis, C. Tjortjis, and V.S. Verykios. 2024. A Suite of Efficient Randomized Algorithms for Streaming Record Linkage. IEEE TKDE, preprints, 2024. 
-- [3] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. IEEE TKDE 27, 4. 2015. 909–921.
+- [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. Minwise Independent Permutations. ACM STOC (p. 327–336). 1998. 
+- [2] D. Karapiperis, C. Tjortjis, and V.S. Verykios. 2024. A Suite of Efficient Randomized Algorithms for Streaming Record Linkage. IEEE TKDE 36, 7 (p. 2803-2813). 2024. 
+- [3] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. IEEE TKDE 27, 4 (p. 909–921). 2015. 
