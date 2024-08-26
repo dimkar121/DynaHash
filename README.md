@@ -37,16 +37,19 @@ The query time, by tuning properly the parameters, is $\Theta(\sqrt{n})$.
 
 ## Running the artifact
 The source has been tested with Python version 3.12
-- Clone the repo
-- `main.py` and `main_db.py` showcase the operations of the pure in-memory version and the DB version, respectively.
-- `main_db_T.py` which demonstrates both the in-memory and persistent operations of DynaHash.
-- `main_ACM_DBLP.py` which uses the paired data sets ACM and DBLP to perform linkage.
-- `main_Scholar_DBLP.py` which uses the paired data sets Google Scholar and DBLP to perform linkage.
-- The `requirements.txt` file lists all Python modules that the source depends on. These modules can be installed using:
- ```
+- Clone the repo and install project's dependencies:
+```
 pip3 install -r requirements.txt
 ```
-  
+The project includes several scripts which demonstrate specific operations:
+- `main.py` and `main_db.py`: pure in-memory and DB operations, respectively.
+- `main_db_T.py`: both the in-memory and persistent operations.
+- `main_probe.py`: the multi-probe operation.
+- `main_ranks.py`: the ranking operation of the results by adjusting the Jaccard threshold.
+The following scripts evaluate the performance of DynaHash:
+- `main_ACM_DBLP.py` uses the paired data sets ACM and DBLP to perform linkage.
+- `main_Scholar_DBLP.py` uses the paired data sets Google Scholar and DBLP to perform linkage.
+   
 ## References
 - [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. Minwise Independent Permutations. ACM STOC. 1998. 327–336.
 - [2] D. Karapiperis, C. Tjortjis, and V.S. Verykios. 2024. A Suite of Efficient Randomized Algorithms for Streaming Record Linkage. IEEE TKDE, preprints, 2024. 
