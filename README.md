@@ -44,10 +44,10 @@ The source has been tested with Python versions 3.10 and 3.12
 
 
 The project includes several scripts which demonstrate specific operations:
-- `main.py` and `main_db.py`: pure in-memory and DB operations, respectively.
-- `main_db_T.py`: both the in-memory and persistent operations.
-- `main_probe.py`: the multi-probe operation.
-- `main_ranks.py`: the ranking operation of the results by adjusting the Jaccard threshold.
+- `main.py` and `main_db.py` handle pure in-memory and DB operations, respectively.
+- `main_db_T.py` showcases the generalization of blocks using both in-memory and persistent operations.
+- `main_probe.py` demonstrates the multi-probe operation.
+- `main_ranks.py` ranks the results by adjusting the Jaccard threshold.
   
 The following scripts evaluate the performance of DynaHash:
 - `main_ACM_DBLP.py` uses the paired data sets ACM and DBLP to perform linkage.
