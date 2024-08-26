@@ -36,16 +36,19 @@ The query time, by tuning properly the parameters, is $\Theta(\sqrt{n})$.
 
 
 ## Running the artifact
-The source has been tested with Python version 3.12
-- Clone the repo and install project's dependencies:
+Clone the repo and install project's dependencies:
 ```
 pip3 install -r requirements.txt
 ```
+The source has been tested with Python versions 3.10 and 3.12
+
+
 The project includes several scripts which demonstrate specific operations:
 - `main.py` and `main_db.py`: pure in-memory and DB operations, respectively.
 - `main_db_T.py`: both the in-memory and persistent operations.
 - `main_probe.py`: the multi-probe operation.
 - `main_ranks.py`: the ranking operation of the results by adjusting the Jaccard threshold.
+  
 The following scripts evaluate the performance of DynaHash:
 - `main_ACM_DBLP.py` uses the paired data sets ACM and DBLP to perform linkage.
 - `main_Scholar_DBLP.py` uses the paired data sets Google Scholar and DBLP to perform linkage.
