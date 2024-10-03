@@ -1,6 +1,6 @@
 # DynaHash
 
-This is the accompanying artifact for the manuscript "DynaHash: An Efficient Blocking Structure for Streaming Record Linkage" co-authored by D. Karapiperis (IHU), C. Tjortjis (IHU), and V.S. Verykios (HOU).
+This is the accompanying artifact for the manuscript "DynaHash: An Efficient Blocking Structure for Streaming Record Linkage".
 ## Abstract
 Record linkage holds a crucial position in data management and analysis by identifying and merging records from disparate data sets that pertain to the same real-world entity. As data volumes grow, the intricacies of record linkage amplify, presenting challenges, such as potential redundancies and computational complexities. This paper introduces DynaHash, a novel randomized record linkage mechanism that utilizes (a) the MinHash technique to generate compact representations of blocking keys and (b) Hamming Locality-Sensitive Hashing to construct the blocking structure from these vectors. By employing these methods, DynaHash offers theoretical guarantees of accuracy and achieves sublinear runtime complexities, with appropriate parameter tuning. It comprises two key components: a persistent storage system for permanently storing the blocking structure to ensure complete results, and an in-memory component for generating very fast partial results by summarizing the persisted blocking structure. Our experimental evaluation against three state-of-the-art methods on six real-world data sets demonstrate DynaHash's exceptional recall rates and query times, which are at least 2x faster than its competitors and do not depend on the size of the underlying data sets.
 
@@ -13,7 +13,7 @@ For instance, the Jaccard $(\mathcal{J})$ similarities of the following pairs of
 - $\mathcal{J}(\textit{Dimitrios}, \textit{Dimitris}) = 0.666$,  
 - $\mathcal{J}(\textit{Katerina}, \textit{Catherina}) = 0.5$.  -->
 
-Each key is converted into a MinHash [1] vector, using the method introduced in [2], which is, then, blocked using Hamming LSH [3].
+Each key is converted into a MinHash vector, which is, then, blocked using Hamming LSH.
 
 DynaHash supports two main methods `add()` and `get()`; method `add(k, o)` inserts a key $k$ and its object $o$ into DynaHash, while `get(k)` returns a list that contains all the similar items that have been found in the Hamming space with a probability at least $1-\delta$ for some user-defined $\delta$.
 ```python
@@ -53,7 +53,3 @@ The following scripts evaluate the performance of DynaHash:
 - `main_ACM_DBLP.py` uses the paired data sets ACM and DBLP to perform linkage.
 - `main_Scholar_DBLP.py` uses the paired data sets Google Scholar and DBLP to perform linkage.
    
-## References
-- [1] A. Z. Broder, M. Charikar, A. Frieze, and M. Mitzenmacher. Minwise Independent Permutations. ACM STOC (p. 327–336). 1998. 
-- [2] D. Karapiperis, C. Tjortjis, and V.S. Verykios. 2024. A Suite of Efficient Randomized Algorithms for Streaming Record Linkage. IEEE TKDE 36, 7 (p. 2803-2813). 2024. 
-- [3] D. Karapiperis and V.S. Verykios. 2015. An LSH-based Blocking Approach with a Homomorphic Matching Technique for Privacy-Preserving Record Linkage. IEEE TKDE 27, 4 (p. 909–921). 2015. 
