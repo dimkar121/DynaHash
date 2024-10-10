@@ -57,7 +57,7 @@ if __name__ == '__main__':
           else:
               fp+=1
   print(tp, fp)
-  print("recall=", round(tp/matches, 2), "precision=", round(fp/(tp+fp), 2))
+  print("recall=", round(tp/matches, 2), "precision=", round(tp/(tp+fp), 2))
 
 
 
