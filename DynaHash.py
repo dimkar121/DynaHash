@@ -228,8 +228,12 @@ class DynaHash:
 
 
 
-
-
+    def vectorize(self, key):
+        r = []
+        for j in range(self.m):
+            k = self.str_to_MinHash(key, 2, j)
+            r.append(k)
+        return r
 
     def add(self, key, v):
         r = []
